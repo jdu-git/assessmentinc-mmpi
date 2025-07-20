@@ -66,38 +66,50 @@ def basic_scales(scores_page1, Kscore, gender):
     y2 = corrected_scores[3:]
 
     # Set figure size and plot points
-    plt.figure(figsize = (16, 5))
+    fig, ax = plt.subplots(figsize=(16, 5))
     
     # L, F, and K
-    plt.plot(x1, y1, marker = 'o', linestyle = '-', color = 'black')
+    ax.plot(x1, y1, marker = 'o', linestyle = '-', color = 'black')
     
     # Hc - Si
-    plt.plot(x2, y2, marker = 'o', linestyle = '-', color = 'black')
+    ax.plot(x2, y2, marker = 'o', linestyle = '-', color = 'black')
 
     # Bold vertical separator for "L, F, K"
-    plt.axvline(x = 2.5, color = 'black', linewidth = 3)
+    ax.axvline(x = 2.5, color = 'black', linewidth = 3)
     
     # Add point labels above each point
     for i, y in zip(x1, y1):
-        plt.text(i, y + 1, str(int(y)), ha = 'center', fontsize = 8)
+        ax.text(i, y + 1, str(int(y)), ha = 'center', fontsize = 8)
     for i, y in zip(x2, y2):
-        plt.text(i, y + 1, str(int(y)), ha = 'center', fontsize = 8)
+        ax.text(i, y + 1, str(int(y)), ha = 'center', fontsize = 8)
 
     # X axis labels
-    plt.xticks(range(len(scales_page1)), scales_page1, rotation = 45)
+    ax.set_xticks(range(len(scales_page1)))
+    ax.set_xticklabels(scales_page1)
+   
+    # T scale on represented on left and right. Left:
+    T_min, T_max = 30, 120
+    buffer = 10
+    ax.set_ylim(T_min - buffer, T_max)
+    ax.set_yticks(range(T_min, T_max + 1, 5))
+    ax.text(0, -0.02, "T", transform = ax.transAxes, fontsize = 12, ha = 'center', va = 'top')
+    
+    # Adding T scale to right side
+    ax2 = ax.twinx()
+    ax2.set_ylim(T_min - buffer, T_max)
+    ax2.set_yticks(ax.get_yticks())
+    ax2.text(1.0, -0.02, "T", transform = ax.transAxes, fontsize = 12, ha = 'center', va = 'top')
 
-    # Create ticks and reference lines
-    plt.yticks(range(0, 125, 5))
-    plt.axhline(y = 50, color = 'gray', linestyle = '--')
-    plt.axhline(y = 65, color = 'gray', linestyle = '--')
+    # T scale reference lines
+    ax.axhline(y = 50, color = 'gray', linestyle = '--')
+    ax.axhline(y = 65, color = 'gray', linestyle = '--')
 
     # Titles and finish creating
     title = f"MMPI-2 {gender} K-Corrected"
     plt.title(title)
     plt.xlabel("Scale")
-    plt.ylabel("T Score")
+    plt.ylabel("")
 
-    plt.ylim(0, 125)
     plt.grid(axis = 'y', linestyle = '--', alpha = 0.7)
 
     plt.tight_layout()
@@ -108,8 +120,8 @@ def basic_scales(scores_page1, Kscore, gender):
 
 def supplementary_scales(scores_page2, gender):
 
-    # Array of scales for page 2
-    scales_page2 = ["T", "A", "R", "Es", "MAC-R", "AAS",  "APS", "MDS", "O-H", "Do", "Re", "Mt", "GM", "GF", "PK",  "PS",  "Si1", "Si2", "Si3", "F3"]
+    # Array of 19 scales for page 2
+    scales_page2 = ["A", "R", "Es", "MAC-R", "AAS",  "APS", "MDS", "O-H", "Do", "Re", "Mt", "GM", "GF", "PK",  "PS",  "Si1", "Si2", "Si3", "F3"]
     
     # Check for correct amount
     if len(scores_page2) != len(scales_page2):
@@ -117,27 +129,43 @@ def supplementary_scales(scores_page2, gender):
         return
     
     # Set figure size and plot points
-    plt.figure(figsize=(16, 8))
-    plt.plot(scales_page2, scores_page2, marker='o', linestyle = '-', color = 'black')
+    fig, ax = plt.subplots(figsize = (18, 8))
+    ax.plot(scales_page2, scores_page2, marker='o', linestyle = '-', color = 'black')
         
     # Add labels above each point
     for i, score in enumerate(scores_page2):
-        plt.text(i, score + 2, str(int(score)), ha='center', fontsize=9)
+        ax.text(i, score + 2, str(int(score)), ha='center', fontsize=9)
     
-    # Create ticks and reference lines
-    plt.yticks(range(0, 130, 5))
+    # X axis labels
+    ax.set_xticks(range(len(scales_page2)))
+    ax.set_xticklabels(scales_page2)
+   
+    # T scale on represented on left and right. Left:
+    T_min, T_max = 30, 120
+    buffer = 10
+    ax.set_ylim(T_min - buffer, T_max)
+    ax.set_yticks(range(T_min, T_max + 1, 5))
+    ax.text(0, -0.02, "T", transform = ax.transAxes, fontsize = 12, ha = 'center', va = 'top')
     
-    plt.axhline(y = 50, color = 'gray', linestyle = '--')
-    plt.axhline(y = 65, color = 'gray', linestyle = '--')
+    # Adding T scale to right side
+    ax2 = ax.twinx()
+    ax2.set_ylim(T_min - buffer, T_max)
+    ax2.set_yticks(ax.get_yticks())
+    ax2.text(1.0, -0.02, "T", transform = ax.transAxes, fontsize = 12, ha = 'center', va = 'top')
+
+    # T scale reference lines
+    ax.axhline(y = 50, color = 'gray', linestyle = '--')
+    ax.axhline(y = 65, color = 'gray', linestyle = '--')
 
     # Titles and finish creating
     title = f"MMPI-2 {gender} K-Corrected"
     plt.title(title)
     plt.xlabel("Scale")
-    plt.ylabel("T Score")
-        
-    plt.ylim(0, 125)
+    plt.ylabel("")
+
     plt.grid(axis = 'y', linestyle = '--', alpha = 0.7)
-    
-    plt.tight_layout()  
+
+    plt.tight_layout()
     plt.show()
+
+
