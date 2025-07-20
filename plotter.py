@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 
-# ------ MALE PAGE 2 -------
+# ------ BASIC SCALES GRAPH -------
 
-def malePage1(male_scores_page1, Kscore):
+def basic_scales(scores_page1, Kscore, gender):
 
     # Array of scales for page 1
     scales_page1 = ["L", "F", "K", "Hc+.5K", "D", "Hy", "Pd+.4K", "Mf", "Pa", "Pl+.4k", "Sc+1K", "Ma+.2K", "Si"]
@@ -43,14 +43,14 @@ def malePage1(male_scores_page1, Kscore):
     }
 
     # Check for correct amount of inputs
-    if len(male_scores_page1) != len(scales_page1):
-        print(f"Expected {len(scales_page1)} scores, but got {len(male_scores_page1)}.")
+    if len(scores_page1) != len(scales_page1):
+        print(f"Expected {len(scales_page1)} scores, but got {len(scores_page1)}.")
         return
 
     # Add the fraction of k or k itself to the corresponding scale's raw score
     k_values = k_lookup.get(Kscore, [0, 0, 0])
 
-    corrected_scores = male_scores_page1.copy()
+    corrected_scores = scores_page1.copy()
     corrected_scores[3] += k_values[0]  # Hc
     corrected_scores[6] += k_values[1]  # Pd
     corrected_scores[9] += Kscore       # Pl
@@ -92,7 +92,8 @@ def malePage1(male_scores_page1, Kscore):
     plt.axhline(y = 65, color = 'gray', linestyle = '--')
 
     # Titles and finish creating
-    plt.title("MMPI-2 Male K-Connected")
+    title = f"MMPI-2 {gender} K-Corrected"
+    plt.title(title)
     plt.xlabel("Scale")
     plt.ylabel("T Score")
 
@@ -103,24 +104,24 @@ def malePage1(male_scores_page1, Kscore):
     plt.show()
 
 
-# ------ MALE PAGE 2 ------
+# ------ SUPPLEMENTARY SCALES GRAPH ------
 
-def malePage2(male_scores_page2):
+def supplementary_scales(scores_page2, gender):
 
     # Array of scales for page 2
     scales_page2 = ["T", "A", "R", "Es", "MAC-R", "AAS",  "APS", "MDS", "O-H", "Do", "Re", "Mt", "GM", "GF", "PK",  "PS",  "Si1", "Si2", "Si3", "F3"]
     
     # Check for correct amount
-    if len(male_scores_page2) != len(scales_page2):
-        print(f"Expected {len(scales_page2)} scores, but got {len(male_scores_page2)}.")  
+    if len(scores_page2) != len(scales_page2):
+        print(f"Expected {len(scales_page2)} scores, but got {len(scores_page2)}.")  
         return
     
     # Set figure size and plot points
     plt.figure(figsize=(16, 8))
-    plt.plot(scales_page2, male_scores_page2, marker='o', linestyle = '-', color = 'black')
+    plt.plot(scales_page2, scores_page2, marker='o', linestyle = '-', color = 'black')
         
     # Add labels above each point
-    for i, score in enumerate(male_scores_page2):
+    for i, score in enumerate(scores_page2):
         plt.text(i, score + 2, str(int(score)), ha='center', fontsize=9)
     
     # Create ticks and reference lines
@@ -130,7 +131,8 @@ def malePage2(male_scores_page2):
     plt.axhline(y = 65, color = 'gray', linestyle = '--')
 
     # Titles and finish creating
-    plt.title("MMPI-2 Male K-Connected continued")
+    title = f"MMPI-2 {gender} K-Corrected"
+    plt.title(title)
     plt.xlabel("Scale")
     plt.ylabel("T Score")
         
