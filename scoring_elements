@@ -1,3 +1,13 @@
+-------- LINEAR T SCORES ----------
+T = 50 + 10((X - M)/SD)
+
+X = raw score
+M = Mean score on scale in normals
+SD = standard deviation on scale in normals
+
+
+
+
 ---- Questions -----
 
 -- Frontend UI --

@@ -1,5 +1,4 @@
-from plotter import basic_scales
-from plotter import supplementary_scales
+from plotter import plot_basic_scales, plot_supplementary_scales 
 
 
 def main():
@@ -10,11 +9,11 @@ def main():
 
     gender = "Female"
 
-    basic_scales(scores_page1, k_score, gender)
+    plot_basic_scales(scores_page1, k_score, gender)
 
     scores_page2 = [56, 76, 56, 89, 37, 47, 98, 56, 88, 90, 94, 65, 73, 78, 89, 30, 43, 43, 68 ]
 
-    supplementary_scales(scores_page2, gender)
+    plot_supplementary_scales(scores_page2, gender)
 
 if __name__ == "__main__":
     main()

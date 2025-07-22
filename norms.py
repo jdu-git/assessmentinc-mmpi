@@ -4,8 +4,8 @@
 
 # MMPI-2 BASIC SCALES WITH K-CORRECTIONS
 BASIC_SCALES = [
-    "L", "F", "K", "Hc+.5K", "D", "Hy", "Pd+.4K",
-    "Mf", "Pa", "Pl+.4k", "Sc+1K", "Ma+.2K", "Si"
+    "L", "F", "K", "Hs+.5K", "D", "Hy", "Pd+.4K",
+    "Mf", "Pa", "Pt+.4k", "Sc+1K", "Ma+.2K", "Si"
 ]
 
 
