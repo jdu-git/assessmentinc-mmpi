@@ -1,19 +1,33 @@
-from plotter import plot_basic_scales, plot_supplementary_scales 
+# main.py
 
+from plotter import plot_basic_scales, plot_supplementary_scales
+from conversion import convert_basic, convert_supplementary
+from norms import BASIC_SCALES, SUPPLEMENTARY_SCALES
 
 def main():
-    
-    scores_page1 = [ 45, 33, 30, 65, 44, 89, 54, 65, 76, 45, 89, 92, 34 ]
+    # Example raw scores for testing:
+    # One big list: basic + supp
+    raw_scores = [
+        # ---- BASIC ---- (should match length of BASIC_SCALES)
+        5, 10, 12, 15, 9, 9, 18, 8, 15, 23, 20, 11, 8,  
+        # ---- SUPPLEMENTARY ---- (should match length of SUPPLEMENTARY_SCALES)
+        9, 14, 12, 8, 7, 15, 10, 13, 11, 10, 12, 7, 8, 9, 10, 11, 9, 8, 7
+    ]
 
-    k_score = 30
+    gender = "male"   # or "female"
+    Kscore = 10       # or whatever valid K you want
 
-    gender = "Female"
+    # Split them:
+    basic_raw = raw_scores[:len(BASIC_SCALES)]
+    supp_raw = raw_scores[len(BASIC_SCALES):]
 
-    plot_basic_scales(scores_page1, k_score, gender)
+    # Plot basic
+    plot_basic_scales(basic_raw, gender, Kscore, convert_basic)
 
-    scores_page2 = [56, 76, 56, 89, 37, 47, 98, 56, 88, 90, 94, 65, 73, 78, 89, 30, 43, 43, 68 ]
+    # Plot supplementary
+    plot_supplementary_scales(supp_raw, gender, convert_supplementary)
 
-    plot_supplementary_scales(scores_page2, gender)
 
 if __name__ == "__main__":
     main()
+

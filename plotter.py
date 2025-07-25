@@ -7,7 +7,7 @@ from norms import BASIC_SCALES, SUPPLEMENTARY_SCALES
 # Plot Basic Scales
 # ------------------------
 
-def plot_basic_scales(raw_scores, gender, Kscore, convert_to_t):
+def plot_basic_scales(raw_scores, gender, Kscore, convert_basic):
     """Plot MMPI-2 Basic Scales with K correction and conversion."""
 
     # K correction lookup
@@ -34,7 +34,7 @@ def plot_basic_scales(raw_scores, gender, Kscore, convert_to_t):
     T_scores = []
     for i, raw in enumerate(corrected):
         scale_name = BASIC_SCALES[i].split("+")[0]
-        T = convert_to_t(scale_name, raw, gender)
+        T = convert_basic(scale_name, raw, gender)
         T_scores.append(T)
 
     x = list(range(len(BASIC_SCALES)))
@@ -76,7 +76,7 @@ def plot_basic_scales(raw_scores, gender, Kscore, convert_to_t):
 # Plot Supplementary Scales
 # ------------------------
 
-def plot_supplementary_scales(raw_scores, gender, convert_to_t):
+def plot_supplementary_scales(raw_scores, gender, convert_supplementary):
     """Plot MMPI-2 Supplementary Scales using T-score conversion."""
 
     if len(raw_scores) != len(SUPPLEMENTARY_SCALES):
