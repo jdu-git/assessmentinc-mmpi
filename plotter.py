@@ -62,7 +62,8 @@ def plot_basic_scales(raw_scores, gender, Kscore, convert_basic):
     ax.axhline(50, color='gray', linestyle='--')
     ax.axhline(65, color='gray', linestyle='--')
     ax.axvline(x=2.5, color='black', linewidth=3)
-
+    
+    # Need to adjust the T scale label "T" to match graph size
     ax.text(-0.07, -0.05, "T", transform=ax.transAxes, fontsize=14, ha='center', va='top', weight='bold')
     ax2.text(1.07, -0.05, "T", transform=ax2.transAxes, fontsize=14, ha='center', va='top', weight='bold')
 
@@ -87,7 +88,7 @@ def plot_supplementary_scales(raw_scores, gender, convert_supplementary):
     T_scores = []
     for i, raw in enumerate(raw_scores):
         scale_name = SUPPLEMENTARY_SCALES[i]
-        T = convert_to_t(scale_name, raw, gender)
+        T = convert_supplementary(scale_name, raw, gender)
         T_scores.append(T)
 
     x = list(range(len(SUPPLEMENTARY_SCALES)))
