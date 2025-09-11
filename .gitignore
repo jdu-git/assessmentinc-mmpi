@@ -1,9 +1,1 @@
-# Ignore Python venvs
-venv/
-ENV/
-env/
-*.pyc
-__pycache/
-
-# VSCode settings
-.vscode/
+norms/

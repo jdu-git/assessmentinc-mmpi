@@ -3,9 +3,7 @@
 import matplotlib.pyplot as plt
 from norms import BASIC_SCALES, SUPPLEMENTARY_SCALES
 
-# ------------------------
 # Plot Basic Scales
-# ------------------------
 
 def plot_basic_scales(raw_scores, gender, Kscore, convert_basic):
     """Plot MMPI-2 Basic Scales with K correction and conversion."""

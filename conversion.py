@@ -15,30 +15,41 @@ with open(os.path.join(BASE, "norms/male_supplementary.json")) as f:
 with open(os.path.join(BASE, "norms/female_supplementary.json")) as f:
     FEMALE_SUPPLEMENTARY = json.load(f)
 
-def convert_basic(scale: str, raw_score: int, gender: str) -> int:
-    raw_score = str(raw_score)
-    table = MALE_BASIC if gender.lower() == "male" else FEMALE_BASIC
+def convert_basic(scale, raw, gender):
+    if gender.lower() == "male":
+        table = MALE_BASIC
+    elif gender.lower() == "female":
+        table = FEMALE_BASIC
+    else:
+        raise ValueError(f"Invalid gender: {gender}")
 
-    scale_table = table.get(scale)
-    if not scale_table:
-        raise ValueError(f"Scale {scale} is not in the table range for {gender}")
+    if scale not in table:
+        raise ValueError(f"Scale '{scale}' not found in table for {gender}")
 
-    T = scale_table.get(raw_score)
-    if not T:
-        raise ValueError(f"Raw score {raw_score} not found for scale {scale} in basic table for {gender}")
+    scale_table = table[scale]
 
-    return T
+    T_score = scale_table.get(str(raw))
+    if T_score is not None:
+        return T_score
+    else:
+        return 0
 
-def convert_supplementary(scale: str, raw_score: int, gender: str) -> int:
-    raw_score = str(raw_score)
-    table = MALE_SUPPLEMENTARY if gender.lower() == "male" else FEMALE_SUPPLEMENTARY
+def convert_supplementary(scale, raw, gender):
+    if gender.lower() == "male":
+        table = MALE_SUPPLEMENTARY
+    elif gender.lower() == "female":
+        table = FEMALE_SUPPLEMENTARY
+    else:
+        raise ValueError(f"Invalid gender: {gender}")
 
-    scale_table = table.get(scale)
-    if not scale_table:
-        raise ValueError(f"Scale {scale} is not in the table range for {gender}")
+    if scale not in table:
+        raise ValueError(f"Scale '{scale}' not found in supplementary table for {gender}")
 
-    T = scale_table.get(raw_score)
-    if not T:
-        raise ValueError(f"Raw score {raw_score} not found for scale {scale} in supplementary table for {gender}")
+    scale_table = table[scale]
 
-    return T
+    T_score = scale_table.get(str(raw))
+    if T_score is not None:
+        return T_score
+    else:
+        return 0
+

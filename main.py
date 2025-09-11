@@ -9,12 +9,12 @@ def main():
     # One big list: basic + supp
     raw_scores = [
         # ---- BASIC ---- (should match length of BASIC_SCALES)
-        5, 10, 12, 15, 26, 16, 18, 46, 15, 23, 20, 11, 24,  
+        5, 10, 12, 16, 26, 16, 18, 44, 15, 23, 20, 11, 24,  
         # ---- SUPPLEMENTARY ---- (should match length of SUPPLEMENTARY_SCALES)
-        9, 14, 12, 8, 7, 15, 10, 13, 11, 10, 12, 7, 8, 9, 10, 11, 9, 8, 7
+        9, 14, 12, 8, 7, 20, 10, 13, 11, 10, 12, 7, 8, 9, 10, 11, 9, 8, 7
     ]
 
-    gender = "female"   # or "female"
+    gender = "male"   # or "female"
     Kscore = 10       # or whatever valid K you want
 
     # Split them:
@@ -30,4 +30,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
