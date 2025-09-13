@@ -12,7 +12,7 @@ BASIC_SCALES = [
 # MMPI-2 SUPPLEMENTARY SCALES 
 SUPPLEMENTARY_SCALES = [
     "A", "R", "Es", "MAC-R", "AAS",  "APS", "MDS", "O-H", "Do", "Re",
-    "Mt", "GM", "GF", "PK",  "PS",  "Si1", "Si2", "Si3", "F3"
+    "Mt", "GM", "GF", "PK",  "PS",  "Si1", "Si2", "Si3", "FB"
 ]
 
 
