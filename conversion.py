@@ -15,41 +15,29 @@ with open(os.path.join(BASE, "norms/male_supplementary.json")) as f:
 with open(os.path.join(BASE, "norms/female_supplementary.json")) as f:
     FEMALE_SUPPLEMENTARY = json.load(f)
 
+
 def convert_basic(scale, raw, gender):
-    if gender.lower() == "male":
-        table = MALE_BASIC
-    elif gender.lower() == "female":
-        table = FEMALE_BASIC
-    else:
-        raise ValueError(f"Invalid gender: {gender}")
+    """Convert a raw score to a T-score for a basic scale.
+    Returns None if no mapping exists."""
+    gender = gender.lower()
+    table = MALE_BASIC if gender == "male" else FEMALE_BASIC
 
-    if scale not in table:
-        raise ValueError(f"Scale '{scale}' not found in table for {gender}")
+    scale_table = table.get(scale)
+    if scale_table is None:
+        return None
 
-    scale_table = table[scale]
+    return scale_table.get(str(raw))
 
-    T_score = scale_table.get(str(raw))
-    if T_score is not None:
-        return T_score
-    else:
-        return 0
 
 def convert_supplementary(scale, raw, gender):
-    if gender.lower() == "male":
-        table = MALE_SUPPLEMENTARY
-    elif gender.lower() == "female":
-        table = FEMALE_SUPPLEMENTARY
-    else:
-        raise ValueError(f"Invalid gender: {gender}")
+    """Convert a raw score to a T-score for a supplementary scale.
+    Returns None if no mapping exists."""
+    gender = gender.lower()
+    table = MALE_SUPPLEMENTARY if gender == "male" else FEMALE_SUPPLEMENTARY
 
-    if scale not in table:
-        raise ValueError(f"Scale '{scale}' not found in supplementary table for {gender}")
+    scale_table = table.get(scale)
+    if scale_table is None:
+        return None
 
-    scale_table = table[scale]
-
-    T_score = scale_table.get(str(raw))
-    if T_score is not None:
-        return T_score
-    else:
-        return 0
+    return scale_table.get(str(raw))
 

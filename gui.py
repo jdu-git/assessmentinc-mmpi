@@ -25,6 +25,10 @@ def main():
     ttk.Label(frame, text="Client Age:").grid(row=1, column=2, padx=5, pady=5, sticky="w")
     client_age = tk.IntVar()
     ttk.Entry(frame, textvariable=client_age, width=5).grid(row=1, column=3, padx=5, pady=5, sticky="w")
+        
+    ttk.Label(frame, text="Gender:").grid(row=1, column=4, padx=5, pady=5, sticky="w")
+    client_gender = tk.StringVar(value="female")
+    ttk.Combobox(frame, textvariable=client_gender, values=["male", "female"], width=7).grid(row=1, column=5)
 
     ttk.Label(frame, text="Testing Company:").grid(row=2, column=0, padx=5, pady=5, sticky="w")
     client_test_location = tk.StringVar()
@@ -38,11 +42,6 @@ def main():
     ttk.Combobox(frame, textvariable=day_var, values=[str(i) for i in range(1, 32)], width=3).grid(row=3, column=2)
     year_var = tk.StringVar(value=str(datetime.now().year))
     ttk.Combobox(frame, textvariable=year_var, values=[str(i) for i in range(2020, 2031)], width=5).grid(row=3, column=3)
-
-    # Gender
-    ttk.Label(frame, text="Gender:").grid(row=1, column=4, padx=5, pady=5, sticky="w")
-    client_gender = tk.StringVar(value="female")
-    ttk.Combobox(frame, textvariable=client_gender, values=["male", "female"], width=7).grid(row=1, column=5)
 
     # K Score
     ttk.Label(frame, text="K Score:").grid(row=5, column=0, padx=5, pady=5, sticky="w")

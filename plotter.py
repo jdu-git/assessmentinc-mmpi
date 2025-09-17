@@ -1,11 +1,8 @@
-# plotter.py
-
 import matplotlib.pyplot as plt
 from norms import BASIC_SCALES, SUPPLEMENTARY_SCALES
 from conversion import convert_basic, convert_supplementary
 
 
-# Plot Basic Scales
 def plot_basic_scales(raw_scores, gender, k_score):
     if len(raw_scores) != len(BASIC_SCALES):
         print(f"Expected {len(BASIC_SCALES)} scores, but received {len(raw_scores)}.")
@@ -26,36 +23,52 @@ def plot_basic_scales(raw_scores, gender, k_score):
     corrected = raw_scores.copy()
     k_values = k_lookup.get(k_score, [0, 0, 0])
 
-    # Apply K corrections (scales L, Hs, Pd, Mf, Pa, Sc depending on index)
+    # Apply K corrections
     corrected[3] += k_values[0]   # Scale 4 (Pd)
     corrected[6] += k_values[1]   # Scale 7 (Pt)
-    corrected[9] += int(k_score)       # Scale 10 (Mf)
-    corrected[10] += int(k_score)      # Scale 11 (Pa)
+    corrected[9] += k_score       # Scale 10 (Mf)
+    corrected[10] += k_score      # Scale 11 (Pa)
     corrected[11] += k_values[2]  # Scale 12 (Sc)
 
     # Convert raw scores to T-scores
     T_scores = []
     for i, raw in enumerate(corrected):
-        scale_name = BASIC_SCALES[i].split("+")[0]  # strip any suffix
+        scale_name = BASIC_SCALES[i].split("+")[0]
         T = convert_basic(scale_name, raw, gender)
         T_scores.append(T)
 
     # Plot
     x = list(range(len(BASIC_SCALES)))
-    y = T_scores
+    T_min, T_max = 30, 120
+    buffer = 10
+
+    clamped_T_scores = [t if t is not None else (T_min - buffer) for t in T_scores]
 
     fig, ax = plt.subplots(figsize=(16, 6))
-    ax.plot(x, y, marker="o", linestyle="-", color="black")
 
-    # Label raw scores above each point
-    for xi, yi, raw in zip(x, y, corrected):
+    # Split into valid and missing
+    x_valid = [xi for xi, t in zip(x, T_scores) if t is not None]
+    y_valid = [yi for yi, t in zip(clamped_T_scores, T_scores) if t is not None]
+    raw_valid = [raw for raw, t in zip(corrected, T_scores) if t is not None]
+
+    x_missing = [xi for xi, t in zip(x, T_scores) if t is None]
+    y_missing = [yi for yi, t in zip(clamped_T_scores, T_scores) if t is None]
+    raw_missing = [raw for raw, t in zip(corrected, T_scores) if t is None]
+
+    # Plot continuous line for valid points
+    ax.plot(x_valid, y_valid, marker="o", color="black")
+
+    # Overlay red dots for missing
+    ax.scatter(x_missing, y_missing, color="red")
+
+    # Add raw score labels
+    for xi, yi, raw in zip(x_valid, y_valid, raw_valid):
+        ax.text(xi, yi + 1, f"{raw}", ha="center", fontsize=8)
+    for xi, yi, raw in zip(x_missing, y_missing, raw_missing):
         ax.text(xi, yi + 1, f"{raw}", ha="center", fontsize=8)
 
     ax.set_xticks(x)
     ax.set_xticklabels(BASIC_SCALES)
-
-    T_min, T_max = 30, 120
-    buffer = 10
 
     ax.set_ylim(T_min - buffer, T_max)
     ax.set_yticks(range(T_min, T_max + 1, 5))
@@ -82,7 +95,6 @@ def plot_basic_scales(raw_scores, gender, k_score):
     plt.show()
 
 
-# Plot Supplementary Scales
 def plot_supplementary_scales(raw_scores, gender):
     if len(raw_scores) != len(SUPPLEMENTARY_SCALES):
         print(f"Expected {len(SUPPLEMENTARY_SCALES)} scores, but received {len(raw_scores)}.")
@@ -97,20 +109,36 @@ def plot_supplementary_scales(raw_scores, gender):
 
     # Plot
     x = list(range(len(SUPPLEMENTARY_SCALES)))
-    y = T_scores
+    T_min, T_max = 30, 120
+    buffer = 10
+
+    clamped_T_scores = [t if t is not None else (T_min - buffer) for t in T_scores]
 
     fig, ax = plt.subplots(figsize=(18, 6))
-    ax.plot(x, y, marker="o", linestyle="-", color="black")
 
-    # Label raw scores above each point
-    for xi, yi, raw in zip(x, y, raw_scores):
-        ax.text(xi, yi + 1, f"int({raw})", ha="center", fontsize=8)
+    # Split into valid and missing
+    x_valid = [xi for xi, t in zip(x, T_scores) if t is not None]
+    y_valid = [yi for yi, t in zip(clamped_T_scores, T_scores) if t is not None]
+    raw_valid = [raw for raw, t in zip(raw_scores, T_scores) if t is not None]
+
+    x_missing = [xi for xi, t in zip(x, T_scores) if t is None]
+    y_missing = [yi for yi, t in zip(clamped_T_scores, T_scores) if t is None]
+    raw_missing = [raw for raw, t in zip(raw_scores, T_scores) if t is None]
+
+    # Plot continuous line for valid points
+    ax.plot(x_valid, y_valid, marker="o", color="black")
+
+    # Overlay red dots for missing
+    ax.scatter(x_missing, y_missing, color="red")
+
+    # Add raw score labels
+    for xi, yi, raw in zip(x_valid, y_valid, raw_valid):
+        ax.text(xi, yi + 1, f"{raw}", ha="center", fontsize=8)
+    for xi, yi, raw in zip(x_missing, y_missing, raw_missing):
+        ax.text(xi, yi + 1, f"{raw}", ha="center", fontsize=8)
 
     ax.set_xticks(x)
     ax.set_xticklabels(SUPPLEMENTARY_SCALES)
-
-    T_min, T_max = 30, 120
-    buffer = 10
 
     ax.set_ylim(T_min - buffer, T_max)
     ax.set_yticks(range(T_min, T_max + 1, 5))
@@ -124,7 +152,6 @@ def plot_supplementary_scales(raw_scores, gender):
     ax.axhline(50, color="gray", linestyle="--")
     ax.axhline(65, color="gray", linestyle="--")
 
-    # "T" labels
     ax.text(0.00, -0.03, "T", transform=ax.transAxes,
             fontsize=14, ha="center", va="top", weight="bold")
     ax2.text(1.00, -0.03, "T", transform=ax2.transAxes,
