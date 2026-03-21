@@ -2,5 +2,6 @@ norms/
 venv/
 __pycache__/
 dist/
+build/
 *.spec
 mmpi_report.pdf

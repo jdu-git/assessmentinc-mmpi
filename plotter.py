@@ -5,6 +5,7 @@ from conversion import convert_basic, convert_supplementary
 
 
 def plot_basic_scales(raw_scores, gender, k_score, ax=None):
+    """Gather all necessary data for plotting basic scales."""
     if len(raw_scores) != len(BASIC_SCALES):
         print(f"Expected {len(BASIC_SCALES)} scores, but received {len(raw_scores)}.")
         return
@@ -95,6 +96,7 @@ def plot_basic_scales(raw_scores, gender, k_score, ax=None):
 
 
 def plot_supplementary_scales(raw_scores, gender, ax=None):
+    """Gather all necessary for plotting supplementary scales."""
     if len(raw_scores) != len(SUPPLEMENTARY_SCALES):
         print(f"Expected {len(SUPPLEMENTARY_SCALES)} scores, but received {len(raw_scores)}.")
         return
