@@ -41,3 +41,4 @@ def convert_supplementary(scale, raw, gender):
 
     return scale_table.get(str(raw))
 
+

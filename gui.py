@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from datetime import datetime
 from norms import BASIC_SCALES, SUPPLEMENTARY_SCALES
-from handlers import submit_data
+from handlers import submit_data, print_report
 
 def main():
     # Create root window
@@ -27,7 +27,7 @@ def main():
     ttk.Entry(frame, textvariable=client_age, width=5).grid(row=1, column=3, padx=5, pady=5, sticky="w")
         
     ttk.Label(frame, text="Gender:").grid(row=1, column=4, padx=5, pady=5, sticky="w")
-    client_gender = tk.StringVar(value="female")
+    client_gender = tk.StringVar(value="male")
     ttk.Combobox(frame, textvariable=client_gender, values=["male", "female"], width=7).grid(row=1, column=5)
 
     ttk.Label(frame, text="Testing Company:").grid(row=2, column=0, padx=5, pady=5, sticky="w")
@@ -41,7 +41,7 @@ def main():
     day_var = tk.StringVar(value=str(datetime.now().day))
     ttk.Combobox(frame, textvariable=day_var, values=[str(i) for i in range(1, 32)], width=3).grid(row=3, column=2)
     year_var = tk.StringVar(value=str(datetime.now().year))
-    ttk.Combobox(frame, textvariable=year_var, values=[str(i) for i in range(2020, 2031)], width=5).grid(row=3, column=3)
+    ttk.Combobox(frame, textvariable=year_var, values=[str(i) for i in range(2025, 2035)], width=5).grid(row=3, column=3)
 
     # K Score
     ttk.Label(frame, text="K Score:").grid(row=5, column=0, padx=5, pady=5, sticky="w")
@@ -87,8 +87,24 @@ def main():
     )
     submit_button.grid(row=999, column=0, columnspan=4, pady=20)
 
+    print_button = ttk.Button(
+        frame, text="Print Report",
+        command=lambda: print_report(
+            {
+                "name": client_name.get(),
+                "age": client_age.get(),
+                "gender": client_gender.get(),
+                "location": client_test_location.get(),
+                "date": f"{month_var.get()}/{day_var.get()}/{year_var.get()}",
+            },
+            client_k_score.get(),
+            basic_entries,
+            supp_entries
+        )
+    )
+    print_button.grid(row=999, column=4, columnspan=4, pady=20)
+
     root.mainloop()
 
 if __name__ == "__main__":
     main()
-

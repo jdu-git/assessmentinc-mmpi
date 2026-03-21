@@ -1,8 +1,11 @@
 # MMPI-2 Scoring Automation Tool
 
 A desktop application that automates psychological test scoring and graphing for the MMPI-2 assessment.
+The test itself is taken via scantron, and then run through a machine to parse the data.
+The user enters in the data produced into the GUI, and has the option to review
+the graphs and/or save and print the file. 
 
-## Overview
+Overview:
 
 This tool was developed to replace a manual, handwritten scoring process. It's currently in production use at a psychological assessment company in Norman, OK, 
 saving hours of staff time weekly.
